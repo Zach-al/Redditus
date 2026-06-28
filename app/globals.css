@@ -62,12 +62,50 @@ section {
   contain-intrinsic-size: auto 400px;
 }
 
-/* Avoid layout shift on animated elements */
-.reduced-motion *,
-[data-reduced-motion="true"] * {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
+/* Performance: contain paint on cards/tiles */
+.card,
+.grid > div,
+li,
+section > div > div {
+  contain: content;
+}
+
+/* Disable heavy backdrop-filter on mobile */
+@media (max-width: 768px) {
+  .backdrop-blur-xl,
+  .backdrop-blur-lg,
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* CSS-level reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-liquid-blob,
+  .animate-liquid-morph,
+  .animate-liquid-float,
+  .animate-liquid-pulse,
+  [style*="animation"],
+  [style*="animation-name"] {
+    animation: none !important;
+  }
+
+  .motion-div,
+  [class*="motion"] {
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }
 
 * {

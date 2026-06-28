@@ -70,7 +70,7 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace'],
-        brutal: ['var(--font-brutal)', 'system-ui', 'sans-serif'],
+        brutal: ['var(--font-display)', 'system-ui', 'sans-serif'],
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
