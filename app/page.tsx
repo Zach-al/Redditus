@@ -123,10 +123,10 @@ export default function Home() {
                 transition={{ delay: 0.8, duration: 0.5 }}
                 className="flex flex-wrap gap-4"
               >
-                <LiquidButton variant="brutal" size="lg" withArrow>
+                <LiquidButton variant="brutal" size="lg" withArrow href="/book">
                   Rent Your AC
                 </LiquidButton>
-                <LiquidButton variant="secondary" size="lg">
+                <LiquidButton variant="secondary" size="lg" href="/book">
                   View Plans
                 </LiquidButton>
               </motion.div>
@@ -333,6 +333,7 @@ export default function Home() {
                         size="sm"
                         withArrow
                         className="w-full"
+                        href="/book"
                       >
                         Rent Now
                       </LiquidButton>
@@ -555,7 +556,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ delay: 0.7, type: 'spring' }}
           >
-            <LiquidButton variant="brutal" size="lg" withArrow>
+            <LiquidButton variant="brutal" size="lg" withArrow href="/book">
               Get Your AC Today
             </LiquidButton>
           </motion.div>

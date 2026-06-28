@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Snowflake, Target, Eye, Heart, Users, Shield } from 'lucide-react'
+import { Snowflake, Target, Heart, Users, Shield } from 'lucide-react'
 import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText, StaggerChildren, StaggerItem } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
@@ -266,7 +266,7 @@ export default function About() {
             whileHover={{ scale: 1.03 }}
             transition={{ type: 'spring', damping: 10 }}
           >
-            <LiquidButton variant="brutal" size="lg" withArrow>
+            <LiquidButton variant="brutal" size="lg" withArrow href="/book">
               Rent Your AC Now
             </LiquidButton>
           </motion.div>

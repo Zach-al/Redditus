@@ -5,11 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { WhatsAppButton } from './WhatsAppButton'
 
 const links = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
+  { href: '/book', label: 'Book Now' },
   { href: '/contact', label: 'Contact' },
   { href: '/faq', label: 'FAQ' },
 ]
@@ -25,11 +28,11 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [policiesOpen, setPoliciesOpen] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const onScroll = () => {
-      const isScrolled = window.scrollY > 20
-      setScrolled(isScrolled)
+      setScrolled(window.scrollY > 10)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -44,6 +47,10 @@ export function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [open])
 
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
+
   return (
     <>
       <motion.header
@@ -52,58 +59,71 @@ export function Navbar() {
         transition={{ type: 'spring', damping: 30, stiffness: 200 }}
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
-          scrolled
-            ? 'bg-background/70 backdrop-blur-xl border-b border-brutal-border/30 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
-            : 'bg-background/30 backdrop-blur-md'
+          scrolled || open
+            ? 'bg-background/80 backdrop-blur-xl border-b border-brutal-border/30 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
+            : 'bg-background/20 backdrop-blur-sm'
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+          <div className="flex items-center justify-between h-14 sm:h-20">
             <Link href="/" className="relative z-10 flex items-center gap-2 group">
               <motion.span
-                className="font-brutal text-2xl sm:text-3xl tracking-tighter text-foreground"
+                className="font-brutal text-xl sm:text-3xl tracking-tighter text-foreground"
                 whileHover={{ scale: 1.03 }}
               >
                 REDDITUS
               </motion.span>
               <motion.span
-                className="w-2 h-2 rounded-full bg-brutal-accent"
+                className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-brutal-accent"
                 animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
                 transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
               />
             </Link>
 
             <div className="hidden md:flex items-center gap-1">
-              {links.map((link, i) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="relative px-4 py-2 text-sm font-mono tracking-wider uppercase text-foreground/70 hover:text-foreground transition-colors group"
-                >
-                  <motion.span
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * i, duration: 0.4 }}
+              {links.map((link, i) => {
+                const isActive = pathname === link.href
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      'relative px-4 py-2 text-sm font-mono tracking-wider uppercase transition-colors group',
+                      isActive ? 'text-foreground' : 'text-foreground/70 hover:text-foreground'
+                    )}
                   >
-                    {link.label}
-                  </motion.span>
-                  <span className="absolute bottom-0 left-2 right-2 h-[1px] bg-brutal-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                </Link>
-              ))}
+                    <motion.span
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                    >
+                      {link.label}
+                    </motion.span>
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active"
+                        className="absolute bottom-0 left-2 right-2 h-[1px] bg-brutal-accent"
+                      />
+                    )}
+                    {!isActive && (
+                      <span className="absolute bottom-0 left-2 right-2 h-[1px] bg-brutal-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                    )}
+                  </Link>
+                )
+              })}
 
               <div className="relative">
                 <button
                   onClick={() => setPoliciesOpen(!policiesOpen)}
                   onMouseEnter={() => setPoliciesOpen(true)}
-                  className="flex items-center gap-1 px-4 py-2 text-sm font-mono tracking-wider uppercase text-foreground/70 hover:text-foreground transition-colors group"
+                  className={cn(
+                    'flex items-center gap-1 px-4 py-2 text-sm font-mono tracking-wider uppercase transition-colors group',
+                    pathname.startsWith('/terms') || pathname.startsWith('/privacy') || pathname.startsWith('/refund') || pathname.startsWith('/cancellation')
+                      ? 'text-foreground'
+                      : 'text-foreground/70 hover:text-foreground'
+                  )}
                 >
-                  <motion.span
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.4 }}
-                  >
-                    Policies
-                  </motion.span>
+                  <span>Policies</span>
                   <motion.div
                     animate={{ rotate: policiesOpen ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
@@ -143,10 +163,7 @@ export function Navbar() {
                 </AnimatePresence>
               </div>
 
-              <Link
-                href="/contact"
-                className="ml-4"
-              >
+              <Link href="/book" className="ml-4">
                 <motion.span
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -167,7 +184,7 @@ export function Navbar() {
                 animate={{ rotate: open ? 90 : 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </motion.div>
             </button>
           </div>
@@ -195,33 +212,62 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 250 }}
-              className="absolute top-0 right-0 bottom-0 w-full max-w-sm bg-background/95 backdrop-blur-xl border-l border-brutal-border/30 pt-24 pb-8"
+              className="absolute top-0 right-0 bottom-0 w-full max-w-sm bg-background/95 backdrop-blur-xl border-l border-brutal-border/30 pt-16 pb-8"
             >
-              <div className="px-6 py-4 space-y-2 overflow-y-auto max-h-full">
-                {[...links, ...policyLinks].map((link, i) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05, duration: 0.3 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      className="block px-4 py-3.5 text-base font-mono tracking-wider uppercase text-foreground/70 hover:text-foreground hover:bg-brutal-accent/10 transition-all border-b border-brutal-border/10"
+              <div className="px-6 py-4 space-y-1 overflow-y-auto max-h-full">
+                {links.map((link, i) => {
+                  const isActive = pathname === link.href
+                  return (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.3 }}
                     >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          'block px-4 py-3 text-base font-mono tracking-wider uppercase transition-all border-b border-brutal-border/10',
+                          isActive
+                            ? 'text-brutal-accent bg-brutal-accent/5'
+                            : 'text-foreground/70 hover:text-foreground hover:bg-brutal-accent/5'
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  )
+                })}
+                <div className="border-b border-brutal-border/10 py-2">
+                  <p className="px-4 py-2 text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
+                    Policies
+                  </p>
+                  {policyLinks.map((link, i) => (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: (links.length + i) * 0.05, duration: 0.3 }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className="block px-6 py-2.5 text-xs font-mono tracking-wider uppercase text-foreground/60 hover:text-foreground hover:bg-brutal-accent/5 transition-all"
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
                 <motion.div
                   initial={{ opacity: 0, x: 40 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7, duration: 0.3 }}
-                  className="pt-4"
+                  transition={{ delay: 0.8, duration: 0.3 }}
+                  className="pt-4 space-y-2"
                 >
                   <Link
-                    href="/contact"
+                    href="/book"
                     onClick={() => setOpen(false)}
                     className="block px-4 py-3.5 text-center text-base font-brutal tracking-wider uppercase bg-brutal-accent text-white brutal-shadow hover:brutal-shadow-lg transition-all"
                   >
@@ -233,6 +279,8 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <WhatsAppButton floating />
     </>
   )
 }

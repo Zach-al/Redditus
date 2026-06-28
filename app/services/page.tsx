@@ -9,7 +9,6 @@ import {
   HeadphonesIcon,
   Zap,
   Check,
-  Snowflake,
 } from 'lucide-react'
 import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText, StaggerChildren, StaggerItem } from '@/components/AnimatedText'
@@ -182,7 +181,7 @@ export default function Services() {
           >
             <p className="text-muted-foreground mb-2 text-sm">From booking to cool air in 24 hours</p>
             <motion.div whileHover={{ scale: 1.03 }} transition={{ type: 'spring', damping: 10 }}>
-              <LiquidButton variant="brutal" size="lg" withArrow>
+              <LiquidButton variant="brutal" size="lg" withArrow href="/book">
                 Start Now
               </LiquidButton>
             </motion.div>
@@ -290,7 +289,7 @@ export default function Services() {
             500+ customers trust Redditus. Join them today.
           </motion.p>
           <motion.div whileHover={{ scale: 1.03 }} transition={{ type: 'spring', damping: 10 }}>
-            <LiquidButton variant="brutal" size="lg" withArrow>
+            <LiquidButton variant="brutal" size="lg" withArrow href="/book">
               Book Your Installation
             </LiquidButton>
           </motion.div>

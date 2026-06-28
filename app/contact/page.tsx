@@ -2,17 +2,24 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Phone, Mail, MapPin, Send, Check, MessageSquare } from 'lucide-react'
+import { Phone, Mail, MapPin, Send, Check, MessageCircle } from 'lucide-react'
 import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
+import { WhatsAppButton } from '@/components/WhatsAppButton'
+import { BUSINESS, WHATSAPP_MESSAGE } from '@/lib/config'
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitted(true)
+    const waMsg = encodeURIComponent(
+      `Hi Redditus! I'm ${form.name}.%0A%0A${form.message}%0A%0APhone: ${form.phone}%0AEmail: ${form.email}`
+    )
+    window.open(`https://wa.me/${BUSINESS.whatsapp}?text=${waMsg}`, '_blank')
   }
 
   return (
@@ -49,8 +56,8 @@ export default function Contact() {
               transition={{ delay: 0.6 }}
               className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed"
             >
-              Ready to rent or have questions? We&apos;re here to help in Bhubaneswar. Reach out and
-              we&apos;ll get back to you within 15 minutes.
+              Ready to rent or have questions? We&apos;re here to help in {BUSINESS.city}. Reach out and
+              we&apos;ll get back to you within {BUSINESS.responseTime}.
             </motion.p>
           </div>
         </div>
@@ -87,9 +94,10 @@ export default function Contact() {
                     <Check className="w-7 h-7 sm:w-8 sm:h-8 text-brutal-accent" />
                   </motion.div>
                   <h3 className="font-display text-xl sm:text-2xl font-bold mb-2">Message Sent!</h3>
-                  <p className="text-muted-foreground text-sm">
-                    We&apos;ll get back to you within 15 minutes.
+                  <p className="text-muted-foreground text-sm mb-4">
+                    We&apos;ll get back to you on WhatsApp within {BUSINESS.responseTime}.
                   </p>
+                  <WhatsAppButton size="sm" label="Chat with us now" />
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
@@ -105,6 +113,8 @@ export default function Contact() {
                       <input
                         type="text"
                         required
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
                         placeholder="John Doe"
                         className="w-full px-4 py-3 bg-background border border-brutal-border text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-brutal-accent transition-all duration-300 font-mono text-sm"
                       />
@@ -120,6 +130,8 @@ export default function Contact() {
                       <input
                         type="tel"
                         required
+                        value={form.phone}
+                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
                         placeholder="+91 98765 43210"
                         className="w-full px-4 py-3 bg-background border border-brutal-border text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-brutal-accent transition-all duration-300 font-mono text-sm"
                       />
@@ -136,6 +148,8 @@ export default function Contact() {
                     <input
                       type="email"
                       required
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
                       placeholder="hello@example.com"
                       className="w-full px-4 py-3 bg-background border border-brutal-border text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-brutal-accent transition-all duration-300 font-mono text-sm"
                     />
@@ -151,6 +165,8 @@ export default function Contact() {
                     <textarea
                       required
                       rows={4}
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
                       placeholder="Tell us about your cooling needs..."
                       className="w-full px-4 py-3 bg-background border border-brutal-border text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-brutal-accent transition-all duration-300 font-mono text-sm resize-none"
                     />
@@ -159,11 +175,13 @@ export default function Contact() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
+                    className="flex flex-wrap gap-3"
                   >
                     <LiquidButton variant="brutal" size="lg" type="submit" withArrow>
                       <Send className="w-4 h-4" />
-                      Send Message
+                      Send via WhatsApp
                     </LiquidButton>
+                    <WhatsAppButton size="md" label="Chat directly" />
                   </motion.div>
                 </form>
               )}
@@ -184,33 +202,42 @@ export default function Contact() {
 
               <div className="space-y-6 sm:space-y-8">
                 {[
-                  { icon: Phone, label: 'Phone', value: '+91-9999999999', desc: 'Available 24/7' },
-                  { icon: Mail, label: 'Email', value: 'hello@redditus.in', desc: 'We reply within 15 min' },
-                  { icon: MapPin, label: 'Location', value: 'Bhubaneswar, Odisha', desc: 'Serving all of Bhubaneswar' },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.15, type: 'spring' }}
-                    className="flex gap-4"
-                  >
+                  { icon: Phone, label: 'Phone', value: BUSINESS.phoneDisplay, desc: `Available ${BUSINESS.businessHours}`, href: `tel:${BUSINESS.phone}` },
+                  { icon: Mail, label: 'Email', value: BUSINESS.email, desc: `We reply within ${BUSINESS.responseTime}`, href: `mailto:${BUSINESS.email}` },
+                  { icon: MapPin, label: 'Location', value: BUSINESS.address, desc: `Serving all of ${BUSINESS.city}` },
+                  { icon: MessageCircle, label: 'WhatsApp', value: BUSINESS.phoneDisplay, desc: 'Instant replies', href: `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}` },
+                ].map((item, i) => {
+                  const Wrapper = item.href ? 'a' : 'div'
+                  const wrapperProps = item.href ? { href: item.href, target: '_blank', rel: 'noopener noreferrer' } : {}
+                  return (
                     <motion.div
-                      whileHover={{ rotate: -10, scale: 1.1 }}
-                      className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center border border-brutal-border bg-background"
+                      key={item.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.15, type: 'spring' }}
                     >
-                      <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-brutal-accent" />
+                      <Wrapper
+                        {...wrapperProps}
+                        className="flex gap-4 group"
+                      >
+                        <motion.div
+                          whileHover={{ rotate: -10, scale: 1.1 }}
+                          className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center border border-brutal-border bg-background group-hover:border-brutal-accent transition-colors"
+                        >
+                          <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-brutal-accent" />
+                        </motion.div>
+                        <div>
+                          <p className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-1">
+                            {item.label}
+                          </p>
+                          <p className="font-display text-base sm:text-lg font-bold">{item.value}</p>
+                          <p className="text-xs sm:text-sm text-muted-foreground">{item.desc}</p>
+                        </div>
+                      </Wrapper>
                     </motion.div>
-                    <div>
-                      <p className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-1">
-                        {item.label}
-                      </p>
-                      <p className="font-display text-base sm:text-lg font-bold">{item.value}</p>
-                      <p className="text-xs sm:text-sm text-muted-foreground">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
+                  )
+                })}
               </div>
 
               <motion.div
@@ -221,14 +248,15 @@ export default function Contact() {
                 whileHover={{ y: -3 }}
                 className="p-5 sm:p-6 border border-brutal-border bg-card/50"
               >
-                <MessageSquare className="w-5 h-5 text-brutal-accent mb-3" />
+                <MessageCircle className="w-5 h-5 text-[#25D366] mb-3" />
                 <p className="text-xs font-mono tracking-widest uppercase text-brutal-accent mb-2">
-                  Quick Response
+                  WhatsApp Available
                 </p>
-                <p className="text-xs sm:text-sm text-muted-foreground">
-                  We typically respond within 15 minutes during business hours
-                  (9 AM — 10 PM, all 7 days) in Bhubaneswar.
+                <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+                  Chat with us instantly on WhatsApp. We typically respond within {BUSINESS.responseTime} during
+                  {BUSINESS.businessHours}.
                 </p>
+                <WhatsAppButton size="sm" label="Start Chat" />
               </motion.div>
             </motion.div>
           </div>
