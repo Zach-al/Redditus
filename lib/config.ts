@@ -1,15 +1,15 @@
 export const BUSINESS = {
   name: 'Redditus',
   tagline: 'Premium AC Rentals',
-  phone: '+91-7559435943',
-  phoneDisplay: '+91 7559435943',
-  whatsapp: '917559435943',
-  email: 'hello@redditus.in',
-  address: 'Bhubaneswar, Odisha, India',
+  phone: '+91-9777049180',
+  phoneDisplay: '+91 9777049180',
+  whatsapp: '919777049180',
+  email: 'redditusrental@gmail.com',
+  address: 'N6/450, Nayapalli, Near Bank Of India, Bhubaneswar, Odisha',
   city: 'Bhubaneswar',
   state: 'Odisha',
   responseTime: '15 minutes',
-  businessHours: '9 AM — 10 PM, all 7 days',
+  businessHours: 'Mon-Sat, 8 AM — 8 PM',
 }
 
 export const PLANS = [
@@ -52,7 +52,6 @@ export const FEATURES = [
   '24/7 Customer Support',
   'Instant Replacement if issues arise',
   'Cancel anytime with 30-day notice',
-  'No Deposit Required',
   '5-Star Inverter AC Units',
 ]
 

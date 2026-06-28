@@ -59,7 +59,7 @@ export default function About() {
               className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed"
             >
               Redditus is Bhubaneswar's premium AC rental service. We make staying cool
-              affordable and hassle-free. No deposits, no long-term contracts — just
+              affordable and hassle-free. No long-term contracts — just
               comfort on your terms.
             </motion.p>
           </div>
@@ -114,7 +114,7 @@ export default function About() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.6 }}
                 >
-                  No deposit. No hidden charges. No long-term lock-in. Just cool air.
+                  No hidden charges. No long-term lock-in. Just cool air.
                 </motion.p>
               </div>
             </motion.div>

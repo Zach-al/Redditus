@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Phone, Mail, MapPin, ChevronUp, Snowflake, MessageCircle } from 'lucide-react'
+import { Phone, Mail, MapPin, ChevronUp, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { BUSINESS, WHATSAPP_MESSAGE } from '@/lib/config'
 
@@ -9,9 +9,7 @@ const quickLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
-  { href: '/book', label: 'Book Now' },
   { href: '/contact', label: 'Contact' },
-  { href: '/faq', label: 'FAQ' },
 ]
 
 const policyLinks = [
@@ -145,29 +143,38 @@ export function Footer() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <h3 className="font-brutal text-xs sm:text-sm tracking-widest uppercase text-foreground mb-4">
-              Get Started
+              Contact
             </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Get your AC today. Starting at just ₹1,500/month.
-            </p>
-            <div className="flex flex-col items-center gap-3">
-              <Link
-                href="/book"
-                className="inline-block px-6 py-3 text-xs font-brutal tracking-wider uppercase bg-brutal-accent text-white brutal-shadow hover:brutal-shadow-lg transition-all hover:brightness-110"
-              >
-                Book Now
-              </Link>
-              <motion.a
-                href={`https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                className="inline-flex items-center gap-2 px-6 py-3 text-xs font-brutal tracking-wider uppercase bg-[#25D366] text-white brutal-shadow hover:brutal-shadow-lg transition-all"
-              >
-                <MessageCircle className="w-4 h-4" />
-                Chat on WhatsApp
-              </motion.a>
-            </div>
+            <ul className="space-y-2">
+              <motion.li className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <Phone className="w-3.5 h-3.5 text-brutal-accent shrink-0" />
+                <a href={`tel:${BUSINESS.phone}`} className="hover:text-foreground transition-colors font-mono">
+                  {BUSINESS.phoneDisplay}
+                </a>
+              </motion.li>
+              <motion.li className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <Mail className="w-3.5 h-3.5 text-brutal-accent shrink-0" />
+                <a href={`mailto:${BUSINESS.email}`} className="hover:text-foreground transition-colors font-mono">
+                  {BUSINESS.email}
+                </a>
+              </motion.li>
+              <motion.li className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="w-3.5 h-3.5 text-brutal-accent shrink-0" />
+                <span className="font-mono">{BUSINESS.address}</span>
+              </motion.li>
+              <motion.li className="pt-3">
+                <motion.a
+                  href={`https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-brutal tracking-wider uppercase bg-[#25D366] text-white brutal-shadow hover:brutal-shadow-lg transition-all"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Chat on WhatsApp
+                </motion.a>
+              </motion.li>
+            </ul>
           </motion.div>
         </div>
 
@@ -180,11 +187,6 @@ export function Footer() {
         >
           <p className="text-xs text-muted-foreground font-mono">
             &copy; {new Date().getFullYear()} REDDITUS. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground font-mono flex items-center gap-1.5">
-            Built with brute force
-            <Snowflake className="w-3 h-3 text-brutal-accent" />
-            liquid grace
           </p>
         </motion.div>
       </div>

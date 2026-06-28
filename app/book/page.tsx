@@ -62,7 +62,7 @@ export default function Book() {
               transition={{ delay: 0.6 }}
               className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed"
             >
-              No deposit. Free installation in 24 hours. Choose your AC and plan below.
+              Free installation in 24 hours. Choose your AC and plan below.
             </motion.p>
           </div>
         </div>

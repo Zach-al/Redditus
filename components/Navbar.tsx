@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { WhatsAppButton } from './WhatsAppButton'
@@ -12,22 +12,12 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
-  { href: '/book', label: 'Book Now' },
   { href: '/contact', label: 'Contact' },
-  { href: '/faq', label: 'FAQ' },
-]
-
-const policyLinks = [
-  { href: '/terms', label: 'Terms of Service' },
-  { href: '/privacy-policy', label: 'Privacy Policy' },
-  { href: '/refund-policy', label: 'Refund Policy' },
-  { href: '/cancellation-policy', label: 'Cancellation Policy' },
 ]
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [policiesOpen, setPoliciesOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -112,57 +102,6 @@ export function Navbar() {
                 )
               })}
 
-              <div className="relative">
-                <button
-                  onClick={() => setPoliciesOpen(!policiesOpen)}
-                  onMouseEnter={() => setPoliciesOpen(true)}
-                  className={cn(
-                    'flex items-center gap-1 px-4 py-2 text-sm font-mono tracking-wider uppercase transition-colors group',
-                    pathname.startsWith('/terms') || pathname.startsWith('/privacy') || pathname.startsWith('/refund') || pathname.startsWith('/cancellation')
-                      ? 'text-foreground'
-                      : 'text-foreground/70 hover:text-foreground'
-                  )}
-                >
-                  <span>Policies</span>
-                  <motion.div
-                    animate={{ rotate: policiesOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronDown className="w-3 h-3" />
-                  </motion.div>
-                  <span className="absolute bottom-0 left-2 right-2 h-[1px] bg-brutal-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                </button>
-                <AnimatePresence>
-                  {policiesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      onMouseLeave={() => setPoliciesOpen(false)}
-                      className="absolute top-full right-0 mt-2 w-56 bg-background/90 backdrop-blur-xl border border-brutal-border/30 shadow-[0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden"
-                    >
-                      {policyLinks.map((link, i) => (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          onClick={() => setPoliciesOpen(false)}
-                          className="block px-5 py-3 text-xs font-mono tracking-wider uppercase text-foreground/70 hover:text-foreground hover:bg-brutal-accent/10 transition-all border-b border-brutal-border/10 last:border-0"
-                        >
-                          <motion.span
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.03 }}
-                          >
-                            {link.label}
-                          </motion.span>
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
               <Link href="/book" className="ml-4">
                 <motion.span
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -239,27 +178,6 @@ export function Navbar() {
                     </motion.div>
                   )
                 })}
-                <div className="border-b border-brutal-border/10 py-2">
-                  <p className="px-4 py-2 text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
-                    Policies
-                  </p>
-                  {policyLinks.map((link, i) => (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, x: 40 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: (links.length + i) * 0.05, duration: 0.3 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className="block px-6 py-2.5 text-xs font-mono tracking-wider uppercase text-foreground/60 hover:text-foreground hover:bg-brutal-accent/5 transition-all"
-                      >
-                        {link.label}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
                 <motion.div
                   initial={{ opacity: 0, x: 40 }}
                   animate={{ opacity: 1, x: 0 }}

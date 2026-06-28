@@ -10,11 +10,11 @@ import { LiquidButton } from '@/components/LiquidButton'
 const faqs = [
   {
     q: 'How does AC rental work in Bhubaneswar?',
-    a: 'You choose your AC plan, book online, and we install it within 24 hours. We serve all areas of Bhubaneswar, including PJ Smith Nagar, Unit 4, and Pharma City. Pay a fixed monthly fee that includes installation, maintenance, and support. No deposit required.',
+    a: 'You choose your AC plan, book online, and we install it within 24 hours. We serve all areas of Bhubaneswar, including PJ Smith Nagar, Unit 4, and Pharma City. Pay a fixed monthly fee that includes installation, maintenance, and support.',
   },
   {
     q: 'Is there a security deposit for AC rental in Bhubaneswar?',
-    a: 'No. We do not require any security deposit. Just pay your first month\'s rent and we handle the rest.',
+    a: 'Yes, a refundable security deposit is required. The deposit amount depends on the AC model you choose and will be returned at the end of your rental term, subject to the condition of the unit.',
   },
   {
     q: 'What is the minimum rental period for AC rental in Bhubaneswar?',

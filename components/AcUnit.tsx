@@ -13,6 +13,7 @@ interface AcUnitProps {
 }
 
 const sizes = {
+  xs: { w: 80, h: 56 },
   sm: { w: 120, h: 80 },
   md: { w: 180, h: 120 },
   lg: { w: 260, h: 170 },
@@ -316,6 +317,25 @@ export function AcUnit({
           strokeWidth={1.5}
           strokeLinecap="round"
         />
+
+        {/* WiFi indicator */}
+        <motion.g
+          animate={animate ? { opacity: [0.4, 1, 0.4] } : undefined}
+          transition={{ repeat: Infinity, duration: 2.5 }}
+        >
+          <path d={`M ${w * 0.75} ${h * 0.24} Q ${w * 0.77} ${h * 0.22} ${w * 0.79} ${h * 0.24}`} stroke="#00ff88" strokeWidth={1} fill="none" />
+          <path d={`M ${w * 0.74} ${h * 0.225} Q ${w * 0.77} ${h * 0.195} ${w * 0.80} ${h * 0.225}`} stroke="#00ff88" strokeWidth={0.8} fill="none" />
+        </motion.g>
+
+        {/* Ice crystal on vent */}
+        {showAir && (
+          <motion.polygon
+            points={`${w * 0.3},${h * 0.55} ${w * 0.305},${h * 0.52} ${w * 0.31},${h * 0.55} ${w * 0.315},${h * 0.555}`}
+            fill="rgba(200, 240, 255, 0.4)"
+            animate={{ opacity: [0.2, 0.6, 0.2] }}
+            transition={{ repeat: Infinity, duration: 4, delay: 1 }}
+          />
+        )}
 
         {/* Bottom shadow */}
         <rect

@@ -51,7 +51,7 @@ const services = [
 
 const process = [
   { step: '01', title: 'Choose Your AC', desc: 'Pick the perfect AC for your space from our range of 5-star inverter units.' },
-  { step: '02', title: 'Book Online', desc: 'Fill a simple form. No deposit required. Get confirmed within minutes.' },
+  { step: '02', title: 'Book Online', desc: 'Fill a simple form. Get confirmed within minutes.' },
   { step: '03', title: 'We Install', desc: 'Our team arrives within 24 hours for professional installation.' },
   { step: '04', title: 'Stay Cool', desc: 'Enjoy your AC with free maintenance and 24/7 support. That&apos;s it.' },
 ]
@@ -263,7 +263,7 @@ export default function Services() {
                     ₹1,500
                   </motion.p>
                   <p className="text-sm text-muted-foreground font-mono">Starting price per month</p>
-                  <p className="text-xs text-muted-foreground mt-4 italic">No deposit required</p>
+                  <p className="text-xs text-muted-foreground mt-4 italic">Security deposit applicable</p>
                 </div>
               </motion.div>
             </motion.div>

@@ -138,7 +138,7 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
               <div className="p-6 sm:p-8">
                 <h2 className="font-display text-2xl sm:text-3xl font-bold mb-2">Book Your AC</h2>
                 <p className="text-sm text-muted-foreground mb-6 font-mono">
-                  No deposit required. Pay first month only.
+                  Pay first month now. Security deposit applicable.
                 </p>
 
                 {step === 0 && (

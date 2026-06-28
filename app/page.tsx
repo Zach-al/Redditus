@@ -137,7 +137,7 @@ export default function Home() {
                 transition={{ delay: 1.2 }}
                 className="flex flex-wrap gap-6 pt-4"
               >
-                {['No Deposit', 'Free Installation', 'Free Maintenance'].map((tag, i) => (
+                {['Free Installation', 'Free Maintenance', '24/7 Support'].map((tag, i) => (
                   <motion.div
                     key={tag}
                     initial={{ opacity: 0, x: -10 }}
@@ -156,9 +156,9 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 0.8, type: 'spring' }}
-              className="relative hidden lg:flex items-center justify-center"
+              className="relative flex items-center justify-center"
             >
-              <div className="relative w-full max-w-[500px] aspect-square">
+              <div className="relative w-full max-w-[320px] sm:max-w-[500px] aspect-square">
                 <div className="absolute inset-0 animate-liquid-morph bg-gradient-to-br from-liquid-primary/30 via-liquid-secondary/20 to-liquid-tertiary/20 blur-[60px]" />
                 <div className="absolute inset-[15%] animate-liquid-morph bg-gradient-to-tr from-liquid-tertiary/20 via-liquid-primary/20 to-liquid-secondary/20 blur-[40px]" style={{ animationDelay: '-2s' }} />
                 <div className="absolute inset-[30%] animate-liquid-pulse bg-brutal-accent/20 blur-[30px] rounded-full" />
@@ -410,7 +410,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
             {[
               { step: '01', title: 'Choose', desc: 'Pick your AC from 5-star inverter units', icon: '🔍' },
-              { step: '02', title: 'Book', desc: 'No deposit. Confirmed within minutes', icon: '📱' },
+              { step: '02', title: 'Book', desc: 'Pay security deposit. Confirmed within minutes', icon: '📱' },
               { step: '03', title: 'Install', desc: 'Professional setup in 24 hours', icon: '🔧' },
               { step: '04', title: 'Enjoy', desc: 'Cool comfort with 24/7 support', icon: '❄' },
             ].map((item, i) => (
@@ -474,7 +474,7 @@ export default function Home() {
                 rating: 5,
               },
               {
-                quote: 'No deposit, no hidden fees. Just a cooling AC and peace of mind. Highly recommend!',
+                quote: 'No hidden fees, just a cooling AC and peace of mind. Highly recommend!',
                 author: 'Amit K.',
                 role: 'Noida',
                 rating: 5,
