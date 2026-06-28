@@ -10,7 +10,7 @@ import {
   Zap,
   Check,
 } from 'lucide-react'
-import { LiquidBlob } from '@/components/LiquidBlob'
+import dynamic from 'next/dynamic'
 import { AnimatedText, StaggerChildren, StaggerItem } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
 import { AcUnit } from '@/components/AcUnit'
@@ -55,6 +55,8 @@ const process = [
   { step: '03', title: 'We Install', desc: 'Our team arrives within 24 hours for professional installation.' },
   { step: '04', title: 'Stay Cool', desc: 'Enjoy your AC with free maintenance and 24/7 support. That&apos;s it.' },
 ]
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function Services() {
   return (

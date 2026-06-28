@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Phone, Mail, MapPin, Send, Check, MessageCircle } from 'lucide-react'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { BUSINESS, WHATSAPP_MESSAGE } from '@/lib/config'
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)

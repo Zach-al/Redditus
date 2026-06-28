@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
+import { useReducedMotion } from '@/lib/useReducedMotion'
 
 interface LiquidBlobProps {
   className?: string
@@ -22,11 +23,12 @@ export function LiquidBlob({
   speed = 1,
   opacity = 0.8,
 }: LiquidBlobProps) {
+  const reduced = useReducedMotion()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    if (!canvas || reduced) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
@@ -47,20 +49,26 @@ export function LiquidBlob({
       time += 0.002 * speed
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      const blobs = [
-        { x: 0.3, y: 0.3, r: size * 0.4, color: color1, phase: 0 },
-        { x: 0.7, y: 0.6, r: size * 0.5, color: color2, phase: 2 },
-        { x: 0.5, y: 0.8, r: size * 0.35, color: color3, phase: 4 },
-        { x: 0.8, y: 0.2, r: size * 0.3, color: color1, phase: 1 },
-        { x: 0.2, y: 0.7, r: size * 0.45, color: color3, phase: 3 },
-      ]
+      const isMobile = window.innerWidth < 768
+      const blobs = isMobile
+        ? [
+            { x: 0.3, y: 0.3, r: size * 0.25, color: color1, phase: 0 },
+            { x: 0.7, y: 0.6, r: size * 0.3, color: color2, phase: 2 },
+          ]
+        : [
+            { x: 0.3, y: 0.3, r: size * 0.4, color: color1, phase: 0 },
+            { x: 0.7, y: 0.6, r: size * 0.5, color: color2, phase: 2 },
+            { x: 0.5, y: 0.8, r: size * 0.35, color: color3, phase: 4 },
+            { x: 0.8, y: 0.2, r: size * 0.3, color: color1, phase: 1 },
+            { x: 0.2, y: 0.7, r: size * 0.45, color: color3, phase: 3 },
+          ]
 
       blobs.forEach((blob) => {
-        const cx = canvas.width * blob.x + Math.sin(time + blob.phase) * canvas.width * 0.1
-        const cy = canvas.height * blob.y + Math.cos(time * 0.8 + blob.phase) * canvas.height * 0.08
+        const cx = canvas.width * blob.x + Math.sin(time + blob.phase) * canvas.width * 0.08
+        const cy = canvas.height * blob.y + Math.cos(time * 0.8 + blob.phase) * canvas.height * 0.06
 
         ctx.beginPath()
-        const points = 100
+        const points = isMobile ? 30 : 60
         for (let i = 0; i <= points; i++) {
           const angle = (i / points) * Math.PI * 2
           const r =
@@ -90,7 +98,9 @@ export function LiquidBlob({
       cancelAnimationFrame(animationId)
       window.removeEventListener('resize', resize)
     }
-  }, [color1, color2, color3, size, speed])
+  }, [color1, color2, color3, size, speed, reduced])
+
+  if (reduced) return null
 
   return (
     <canvas

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
+import { useReducedMotion } from '@/lib/useReducedMotion'
 
 interface CoolAirFlowProps {
   className?: string
@@ -11,7 +12,10 @@ interface CoolAirFlowProps {
 }
 
 export function CoolAirFlow({ className, intensity = 'medium', color = 'rgba(100, 200, 255, 0.15)' }: CoolAirFlowProps) {
-  const particles = intensity === 'high' ? 20 : intensity === 'medium' ? 12 : 6
+  const reduced = useReducedMotion()
+  const particles = reduced ? 0 : intensity === 'high' ? 20 : intensity === 'medium' ? 12 : 6
+
+  if (reduced) return null
 
   return (
     <div className={cn('absolute inset-0 pointer-events-none overflow-hidden', className)}>
@@ -47,6 +51,7 @@ export function CoolAirFlow({ className, intensity = 'medium', color = 'rgba(100
 }
 
 export function AnimatedThermometer({ className }: { className?: string }) {
+  const reduced = useReducedMotion()
   const [temp, setTemp] = useState(18)
 
   useEffect(() => {
@@ -57,15 +62,15 @@ export function AnimatedThermometer({ className }: { className?: string }) {
         if (next < 16 || next > 26) return prev
         return next
       })
-    }, 3000)
+    }, reduced ? 10000 : 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [reduced])
 
   return (
     <motion.div
       className={cn('flex flex-col items-center gap-1', className)}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      initial={reduced ? undefined : { opacity: 0 }}
+      whileInView={reduced ? undefined : { opacity: 1 }}
       viewport={{ once: true }}
     >
       <div className="relative w-8 h-32 sm:w-10 sm:h-40 rounded-full border-2 border-brutal-border bg-card overflow-hidden">
@@ -88,21 +93,20 @@ export function AnimatedThermometer({ className }: { className?: string }) {
 }
 
 export function TemperatureBadge({ className }: { className?: string }) {
+  const reduced = useReducedMotion()
   const [temp, setTemp] = useState(18)
-  const [prevTemp, setPrevTemp] = useState(18)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPrevTemp(temp)
       setTemp((prev) => {
         const change = Math.random() > 0.5 ? 0.5 : -0.5
         const next = prev + change
         if (next < 16 || next > 26) return prev
         return Math.round(next * 2) / 2
       })
-    }, 2000)
+    }, reduced ? 10000 : 2000)
     return () => clearInterval(interval)
-  }, [temp])
+  }, [reduced])
 
   return (
     <motion.div
@@ -110,21 +114,15 @@ export function TemperatureBadge({ className }: { className?: string }) {
         'inline-flex items-center gap-2 px-3 py-1.5 bg-background/80 backdrop-blur-md border border-brutal-border/50 rounded',
         className
       )}
-      whileHover={{ scale: 1.05 }}
+      {...(reduced ? {} : { whileHover: { scale: 1.05 } })}
     >
       <motion.div
         key={temp}
-        initial={{ y: -10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        initial={reduced ? undefined : { y: -10, opacity: 0 }}
+        animate={reduced ? undefined : { y: 0, opacity: 1 }}
         className="flex items-center gap-1"
       >
-        <motion.span
-          animate={{ rotate: [0, 5, -5, 0] }}
-          transition={{ repeat: Infinity, duration: 3 }}
-          className="text-brutal-accent text-sm"
-        >
-          ❄
-        </motion.span>
+        <span className="text-brutal-accent text-sm">❄</span>
         <span className="font-display text-lg font-bold text-foreground">{temp}°</span>
         <span className="text-xs text-muted-foreground font-mono">C</span>
       </motion.div>
@@ -133,16 +131,17 @@ export function TemperatureBadge({ className }: { className?: string }) {
 }
 
 export function AcRemote({ className }: { className?: string }) {
+  const reduced = useReducedMotion()
   return (
     <motion.div
       className={cn(
         'relative w-14 h-28 sm:w-16 sm:h-32 rounded-lg border-2 border-brutal-border bg-card p-1.5 flex flex-col items-center gap-1',
         className
       )}
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={reduced ? undefined : { opacity: 0, x: 20 }}
+      whileInView={reduced ? undefined : { opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -5, rotate: -2 }}
+      {...(reduced ? {} : { whileHover: { y: -5, rotate: -2 } })}
       transition={{ type: 'spring', damping: 15 }}
     >
       <div className="w-4 h-4 rounded-full bg-brutal-accent/20 flex items-center justify-center">

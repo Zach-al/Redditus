@@ -1,8 +1,8 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Snowflake, Target, Heart, Users, Shield } from 'lucide-react'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText, StaggerChildren, StaggerItem } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
 import { AcUnit } from '@/components/AcUnit'
@@ -21,6 +21,8 @@ const timeline = [
   { year: '2023', title: '500+ Rented', desc: 'Expanded across Bhubaneswar with a fleet of 500+ premium AC units.' },
   { year: '2024', title: 'Full Coverage', desc: 'Launched 24/7 support and same-day installation across Bhubaneswar.' },
 ]
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function About() {
   return (

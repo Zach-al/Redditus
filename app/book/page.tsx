@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Check, ArrowRight, Snowflake, Shield, HeadphonesIcon, Truck } from 'lucide-react'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
 import { BookingModal } from '@/components/BookingModal'
@@ -27,6 +27,7 @@ export default function Book() {
     { icon: HeadphonesIcon, label: '24/7 Support' },
   ]
 
+  const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
   return (
     <>
       <LiquidBlob speed={0.6} opacity={0.4} />

@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, X } from 'lucide-react'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
 
@@ -57,6 +57,8 @@ const faqs = [
     a: 'You can upgrade to a larger or newer model anytime. We\'ll handle the swap within 48 hours with minimal adjustment to your monthly fee.',
   },
 ]
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)

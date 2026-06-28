@@ -1,9 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { XCircle } from 'lucide-react'
+import dynamic from 'next/dynamic'
 
 const sections = [
   {
@@ -39,6 +39,8 @@ const sections = [
     content: 'Instead of cancelling, consider upgrading to a different AC model or plan. Upgrades are processed within 48 hours with minimal adjustment to your monthly fee. Contact us to explore options before cancelling.',
   },
 ]
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function CancellationPolicy() {
   return (

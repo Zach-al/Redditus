@@ -1,9 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { Shield } from 'lucide-react'
+import dynamic from 'next/dynamic'
 
 const sections = [
   {
@@ -39,6 +39,8 @@ const sections = [
     content: 'Redditus reserves the right to modify these terms at any time. Customers will be notified of material changes via email or SMS. Continued use of services after changes constitutes acceptance of updated terms.',
   },
 ]
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function Terms() {
   return (

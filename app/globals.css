@@ -56,6 +56,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Performance: lazy-render offscreen sections */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}
+
+/* Avoid layout shift on animated elements */
+.reduced-motion *,
+[data-reduced-motion="true"] * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
 * {
   border-color: hsl(var(--border));
 }

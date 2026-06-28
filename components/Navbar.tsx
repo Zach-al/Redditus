@@ -21,8 +21,15 @@ export function Navbar() {
   const pathname = usePathname()
 
   useEffect(() => {
+    let ticking = false
     const onScroll = () => {
-      setScrolled(window.scrollY > 10)
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 10)
+          ticking = false
+        })
+        ticking = true
+      }
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Phone, Mail, MapPin, ChevronUp, MessageCircle } from 'lucide-react'
+import { Phone, Mail, MapPin, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 import { BUSINESS, WHATSAPP_MESSAGE } from '@/lib/config'
 
@@ -162,18 +162,7 @@ export function Footer() {
                 <MapPin className="w-3.5 h-3.5 text-brutal-accent shrink-0" />
                 <span className="font-mono">{BUSINESS.address}</span>
               </motion.li>
-              <motion.li className="pt-3">
-                <motion.a
-                  href={`https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-brutal tracking-wider uppercase bg-[#25D366] text-white brutal-shadow hover:brutal-shadow-lg transition-all"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Chat on WhatsApp
-                </motion.a>
-              </motion.li>
+
             </ul>
           </motion.div>
         </div>

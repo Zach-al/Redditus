@@ -1,9 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { RotateCcw } from 'lucide-react'
+import dynamic from 'next/dynamic'
 
 const sections = [
   {
@@ -39,6 +39,8 @@ const sections = [
     content: 'Email your refund request to hello@redditus.in with your customer ID and reason. Our team will respond within 24 hours. For urgent requests, call our support line. Refunds are processed within 7 business days of approval.',
   },
 ]
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function RefundPolicy() {
   return (

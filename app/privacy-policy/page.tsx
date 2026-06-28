@@ -1,9 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText } from '@/components/AnimatedText'
 import { Lock } from 'lucide-react'
+import dynamic from 'next/dynamic'
 
 const sections = [
   {
@@ -39,6 +39,8 @@ const sections = [
     content: 'For privacy-related inquiries, contact our Data Protection Officer at hello@redditus.in or visit us in Bhubaneswar. We are committed to resolving any concerns about your data privacy promptly.',
   },
 ]
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
 
 export default function PrivacyPolicy() {
   return (

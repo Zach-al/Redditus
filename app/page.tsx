@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import {
@@ -14,11 +15,13 @@ import {
   Star,
   Check,
 } from 'lucide-react'
-import { LiquidBlob } from '@/components/LiquidBlob'
 import { AnimatedText, StaggerChildren, StaggerItem } from '@/components/AnimatedText'
 import { LiquidButton } from '@/components/LiquidButton'
-import { AcUnit, AcUnitWall } from '@/components/AcUnit'
 import { CoolAirFlow, TemperatureBadge, AnimatedThermometer, AcRemote } from '@/components/CoolAirFlow'
+
+const LiquidBlob = dynamic(() => import('@/components/LiquidBlob').then((m) => ({ default: m.LiquidBlob })), { ssr: false })
+const AcUnit = dynamic(() => import('@/components/AcUnit').then((m) => ({ default: m.AcUnit })), { ssr: false })
+const AcUnitWall = dynamic(() => import('@/components/AcUnit').then((m) => ({ default: m.AcUnitWall })), { ssr: false })
 
 const products = [
   { name: 'Split AC — 1 Ton', price: '₹1,500', original: '₹2,500', popular: false, room: 'Up to 120 sq.ft', power: '1,000W' },
